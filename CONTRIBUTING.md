@@ -14,5 +14,3 @@ To get started, follow these steps:
    - Clone the repository to your local machine using the following command:
    
    ```bash
-   git clone https://github.com/YOUR-USERNAME/Google-Keep-Clone.git
-```
