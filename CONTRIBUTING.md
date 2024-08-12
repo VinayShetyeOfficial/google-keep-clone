@@ -4,13 +4,15 @@
 
 First of all, thanks for considering contributing to this project! 
 
-To get started, fork the repository and clone it to your local machine.
+To get started, follow these steps:
 
-```bash
-git clone https://github.com/OurUMassd-PROJECTS/Google-Keep-Clone.git
-```
-```
-cd Google-Keep-Clone
-```
+1. **Fork the Repository**: 
+   - Navigate to the original repository on GitHub.
+   - Click the "Fork" button at the top right of the repository page to create your own copy of the repository.
 
-
+2. **Clone Your Fork**:
+   - Clone the repository to your local machine using the following command:
+   
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/Google-Keep-Clone.git
+```
