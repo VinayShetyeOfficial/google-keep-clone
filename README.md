@@ -1,10 +1,7 @@
-# Google Keep Clone 📝  
+# Google Keep Clone 📝 [[Live Preview](https://google-keep-clone-live.netlify.app/)]
   
-![Google-Keep-Clone](https://github.com/VinayShetyeOfficial/Google-Keep-Clone/assets/100470361/856feb0a-fe31-4de2-8976-808d64a731df)             
-       
-### Links                     
-Live Site URL: [Preview](https://endearing-haupia-ac9511.netlify.app/)        
-          
+![image](https://github.com/user-attachments/assets/ee30d1a6-33af-4b65-bbd9-a1764ffc3cca)
+             
 ## Description           
 This repository is a clone of the popular note-taking application, Google Keep, developed using React Js, HTML5, and CSS3. The project aims  to replicate the functionality of the original  application while also provi ding additional features and customization options.
  
