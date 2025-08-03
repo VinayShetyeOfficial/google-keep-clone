@@ -1,4 +1,4 @@
-# Google-Keep-Clone 📝 [[Live Preview](https://google-keep-clone-live.netlify.app/)]
+# Google Keep Clone 📝 [[Live Preview](https://google-keep-clone-live.netlify.app/)]
   
 ![image](https://github.com/user-attachments/assets/ee30d1a6-33af-4b65-bbd9-a1764ffc3cca)
              
