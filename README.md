@@ -2,7 +2,7 @@
 
 ![image](https://github.com/user-attachments/assets/6a65bd97-54b8-40db-8276-b0e36d7c6e65)
 
-![image](https://github.com/user-attachments/assets/ee30d1a6-33af-4b65-bbd9-a1764ffc3cca)
+![image](https://github.com/user-attachments/assets/30eba58e-3934-498b-8682-5ff299346f52)
 
 ## Description           
 This repository is a clone of the popular note-taking application, Google Keep, developed using React Js, HTML5, and CSS3. The project aims  to replicate the functionality of the original  application while also provi ding additional features and customization options.
