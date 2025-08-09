@@ -172,7 +172,7 @@ _Clean masonry layout with notes, rich formatting, and background options_
 </div>
 
 > 🔥 **Important:** This app requires Firebase configuration for authentication and data storage.  
-> 📖 **Complete Setup Guide:** [Firebase Setup Instructions](FIREBASE_SETUP.md)
+> 📖 **Complete Setup Guide:** [Firebase Setup Instructions](./new-version/FIREBASE_SETUP.md)
 
 <table>
 <tr>
