@@ -213,8 +213,8 @@ npm start
 
 | Guide                                                      | Description                  |
 | ---------------------------------------------------------- | ---------------------------- |
-| 🔥 [Firebase Setup](FIREBASE_SETUP.md)                     | Complete configuration guide |
-| 🌐 [Live Demo](https://google-keep-clone-live.netlify.com) | See it in action             |
+| 🔥 [Firebase Setup](./new-version/FIREBASE_SETUP.md)                     | Complete configuration guide |
+| 🌐 [Live Demo](https://google-keep-clone-live.netlify.app/) | See it in action             |
 
 </td>
 </tr>
