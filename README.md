@@ -1,27 +1,4 @@
-<<<<<<< Updated upstream
-# Google Keep Clone 📝 [[Live Preview](https://google-keep-clone-live.netlify.app/)]
-
-![image](https://github.com/user-attachments/assets/6a65bd97-54b8-40db-8276-b0e36d7c6e65)
-
-![image](https://github.com/user-attachments/assets/30eba58e-3934-498b-8682-5ff299346f52)
-
-## Description           
-This repository is a clone of the popular note-taking application, Google Keep, developed using React Js, HTML5, and CSS3. The project aims  to replicate the functionality of the original  application while also provi ding additional features and customization options.
- 
-## Features       
-- **Masonry Grid Layout:** The notes are displayed in a visually pleasing and organized Masonry grid layout.
-- **Edit & Delete Notes:** Users have the option to edit and delete their notes as needed.
-- **Custom Backgrounds:** Add solid color or SVG backgrounds to personalize your notes. 
-- **Responsive Design:** The application is responsive, offering a user experience similar to Google Keep. 
-  
-## Personalization
-Users can organize their notes with ease, thanks to the option of adding solid color and SVG backgrounds. This feature is especially useful for differentiating between numerous notes.
- 
-## Development Opportunities
-The well-organized and easy-to-follow code makes this repository a great starting point for anyone looking to create a note-taking application or learn React Js, HTML5, and CSS3. It's optimized for speed and performance.
-=======
 <div align="center">
->>>>>>> Stashed changes
 
 # 📝 Google Keep Clone [[Live Preview](https://google-keep-clone-live.netlify.app/)]
 
@@ -57,7 +34,7 @@ This project is a close recreation of Google Keep's interface and main features.
 
 ### 🌟 **Main Interface**
 
-<img src="demo-screenshots/App Demo.png" alt="Google Keep Clone Main Interface" width="100%">
+<img src="./new-version/demo-screenshots/App Demo.png" alt="Google Keep Clone Main Interface" width="100%">
 
 _Clean masonry layout with notes, rich formatting, and background options_
 
@@ -76,7 +53,7 @@ _Clean masonry layout with notes, rich formatting, and background options_
 - 🔍 **Live Search** - Find notes instantly by title/content
 
 <div align="center">
-<img src="demo-screenshots/Search Demo.png" alt="Search Demo" width="80%">
+<img src="./new-version/demo-screenshots/Search Demo.png" alt="Search Demo" width="80%">
 <br/>
 <sub><i>🔍 Instant search results as you type</i></sub>
 </div>
@@ -94,7 +71,7 @@ _Clean masonry layout with notes, rich formatting, and background options_
 - 🎯 **Google-style UI** - Pixel-perfect recreation
 
 <div align="center">
-<img src="demo-screenshots/Dark Theme Demo.png" alt="Dark Theme Demo" width="80%">
+<img src="./new-version/demo-screenshots/Dark Theme Demo.png" alt="Dark Theme Demo" width="80%">
 <br/>
 <sub><i>🌙 Dark mode with custom background images</i></sub>
 </div>
