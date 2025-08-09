@@ -1,0 +1,2330 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --font-colr: #5f6368;
+  --orangeAdd: #fea809;
+  --sbthumb: #8f54a0;
+  --border: #e0e0e0;
+  --bgActiveBdr: #a142f4;
+  --text-dark: #202124;
+  --text-medium: #3c4043;
+
+  /* Light theme colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --border-color: #e0e0e0;
+  --search-bg: #f1f3f4;
+  --placeholder-color: #5f6368;
+  --note-bg-default: #ffffff;
+  --header-bg: #ffffff;
+  --sidebar-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Masonry layout tokens */
+  --note-gutter: 10px; /* exact horizontal + vertical gap requirement */
+  --note-col-width: 260px; /* base column width, adjusted at breakpoints */
+}
+
+/* Dark theme colors */
+[data-theme="dark"] {
+  --bg-primary: rgb(32, 33, 36);
+  --bg-secondary: rgb(32, 33, 36);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.87);
+  --border-color: rgb(95, 99, 104);
+  --search-bg: rgba(241, 243, 244, 0.24);
+  --placeholder-color: rgba(255, 255, 255, 0.6);
+  --note-bg-default: rgb(32, 33, 36);
+  --header-bg: rgb(32, 33, 36);
+  --sidebar-bg: rgb(32, 33, 36);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark theme header border */
+[data-theme="dark"] .header {
+  box-shadow: inset 0 -1px 0 0 rgb(95, 99, 104);
+}
+
+/* Dark theme CreateArea styling */
+[data-theme="dark"] form.inputForm {
+  background-color: rgb(32, 33, 36);
+  border-color: rgb(95, 99, 104);
+}
+
+/* Dark theme default note background override */
+[data-theme="dark"] .note-bg-default,
+[data-theme="dark"] .editNote-bg-default {
+  background-color: rgb(32, 33, 36) !important;
+}
+
+/* Dark theme class for body */
+body.dark-theme {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Inter", "Google Sans", "Open Sans", "PT Sans", Roboto,
+    sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.header {
+  padding: 8px;
+  box-shadow: inset 0 -1px 0 0 rgb(218, 220, 224);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  background-color: var(--header-bg);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  max-width: 600px;
+  margin: 0 20px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 8px;
+}
+
+/* Settings Icon */
+.settings-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.settings-icon:hover {
+  background-color: rgba(95, 99, 104, 0.1);
+  color: var(--text-primary);
+}
+
+.settings-icon svg {
+  font-size: 20px;
+}
+
+/* Icon borders - search and gear icons */
+.mobile-search-icon,
+.settings-icon {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+}
+
+.header a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header h3 {
+  font-size: 22px;
+  font-weight: lighter;
+  color: var(--text-primary);
+  padding-left: 4px;
+  line-height: 24px;
+  vertical-align: middle;
+  transition: color 0.3s ease;
+}
+
+form.inputForm {
+  position: relative;
+  max-width: 600px;
+  margin: 32px auto 50px auto;
+  background-color: var(--bg-primary);
+  padding: 8px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* New container structure */
+.note-top-container {
+  background-color: transparent;
+  border-radius: 7px 7px 0 0;
+  padding: 8px 8px 0 8px;
+  margin: -8px -8px 0 -8px;
+}
+
+.note-bottom-container {
+  background-color: transparent;
+  border-radius: 0 0 7px 7px;
+  padding: 0 8px 8px 8px;
+  margin: 0 -8px -8px -8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Ensure inputs have transparent backgrounds to inherit container background */
+.note-top-container input,
+.note-top-container textarea {
+  background-color: transparent !important;
+}
+
+.inputForm.active {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.2),
+    0 2px 4px 1px rgba(60, 64, 67, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+input,
+textarea {
+  width: 100%;
+  border: none;
+  color: var(--text-primary);
+  font-family: "Open Sans", sans-serif;
+  outline: none;
+  transition: color 0.3s ease;
+}
+
+form.inputForm input {
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+form.inputForm textarea {
+  color: var(--text-primary);
+  padding: 5px 8px;
+  letter-spacing: 0.01428571em;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  max-height: 300px;
+  min-height: 30px;
+  height: 30px;
+  resize: none;
+}
+
+form.inputForm textarea.expanded::-webkit-input-placeholder {
+  letter-spacing: 0.01428571em;
+  font-family: "Inter", "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--placeholder-color);
+  line-height: 1.25rem;
+}
+
+form.inputForm textarea.expanded {
+  /* min-height: 70px; */
+  margin-bottom: 10px;
+}
+
+form.inputForm p {
+  display: flex;
+}
+
+form.inputForm textarea.closed::-webkit-input-placeholder {
+  letter-spacing: 0.01428571em;
+  font-family: "Inter", "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--placeholder-color);
+  line-height: 1.25rem;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+form textarea {
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge, and Safari */
+form textarea::-webkit-scrollbar {
+  width: 5px;
+
+  /* border: 1px solid black; */
+}
+
+form textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+form textarea::-webkit-scrollbar-thumb {
+  background-color: var(--orangeAdd);
+  background-clip: padding-box;
+  /* border-radius: 10px; */
+}
+
+form textarea::-moz-scrollbar-button {
+  display: none;
+}
+
+form input::-webkit-input-placeholder {
+  letter-spacing: 0.00625em;
+  font-family: "Inter", "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--placeholder-color);
+  line-height: 1.5rem;
+  padding-top: 12px;
+}
+
+.note {
+  width: 100%;
+  color: var(--text-primary);
+  background-color: var(--note-bg-default);
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  /* Remove default margins so the masonry gap is exactly 10px via .note-item */
+  margin: 0;
+  float: left;
+  letter-spacing: 0.00625em;
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding-top: 12px;
+  transition: box-shadow 0.12s ease-in, background-color 0.3s ease,
+    border-color 0.3s ease, color 0.3s ease;
+}
+
+.note:hover {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.note h1 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+}
+
+.note p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0;
+  line-height: 1.3rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+  /* CSS-based text truncation */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 28; /* Show approximately 8 lines */
+  -webkit-box-orient: vertical;
+  transition: color 0.3s ease;
+}
+
+.inputForm button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 18px;
+  bottom: -18px;
+  background-color: var(--orangeAdd);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  box-shadow: 0 1px 3px rgba(165, 165, 165);
+  cursor: pointer;
+  outline: none;
+}
+
+.note button {
+  position: relative;
+  float: right;
+  color: #f88651;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  opacity: 0;
+  transition: opacity 0.218s ease-in;
+}
+
+.note:hover button {
+  opacity: 1;
+}
+
+.note button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px !important;
+  height: 40px !important;
+  border-radius: 100% !important;
+  margin: 0px -8px -4px 8px !important;
+}
+
+.btn:hover {
+  background-color: #07070717;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  color: #f22f2f;
+}
+
+.btn-edit:hover {
+  color: rgb(43, 133, 224);
+}
+
+.btn-delete:hover,
+.btn-edit:hover {
+  background-color: #07070717 !important;
+}
+
+/* Dark theme button hover consistency */
+[data-theme="dark"] .btn:hover,
+[data-theme="dark"] .btn-delete:hover,
+[data-theme="dark"] .btn-edit:hover {
+  background-color: rgba(232, 234, 237, 0.12) !important;
+}
+
+.btn-bgOptions {
+  padding: 0 !important;
+  margin-right: 0px !important;
+  margin-top: -1.5px !important;
+}
+
+/* Disabled state for bgOptions buttons */
+.btn-bgOptions[style*="cursor: not-allowed"]:hover {
+  cursor: not-allowed !important;
+}
+
+/* Modify Material ui Tooltip  */
+.MuiTooltip-popper {
+  margin-top: 0px !important;
+  height: 0px !important;
+}
+
+.MuiTooltip-tooltip {
+  /* top: 0px !important; */
+  position: relative;
+  font-size: 12px !important;
+  inset: -12px 0 0 0 !important;
+}
+
+/* Custom User Tooltip Styling */
+.user-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.tooltip-title {
+  color: white;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.tooltip-name {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.tooltip-email {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.count {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  color: #45474c;
+  justify-content: center;
+}
+
+.footer {
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  /* height: 2.5rem; */
+}
+
+.footer p {
+  display: inline-flex;
+  background: linear-gradient(90deg, #1352bc, #1a73e8b5, #1352bc);
+  color: rgba(255, 255, 255, 0.9); /* white with slight opacity */
+  font-weight: 500;
+  text-align: center;
+  padding: 2px 20px;
+  font-family: "Segoe UI", sans-serif;
+  cursor: default;
+  user-select: none;
+  position: relative;
+  margin-top: 50px;
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+  border-radius: 20px;
+}
+/* Dark theme footer */
+[data-theme="dark"] .footer p {
+  background: linear-gradient(90deg, #1352bc38, #1a73e8, #1352bc38);
+}
+
+/* PAGE CONTAINER (uses maximum available space like Google Keep) */
+.container {
+  height: auto;
+  padding: 0 16px; /* minimal padding like Google Keep */
+  margin: 0 auto 30px auto;
+  width: 100%;
+  max-width: none; /* no width limit - use full screen */
+}
+
+/* Masonry grid using Masonry.js (CodePen-style columnWidth) */
+.notes-grid {
+  position: relative; /* required by Masonry for absolute positioning */
+  margin: 0 auto;
+  width: 100%; /* span full container width */
+  /* new: default column count, will be updated by JS */
+  --computed-cols: 1;
+}
+
+.notes-grid .grid-sizer {
+  width: calc(
+    (100% - (var(--computed-cols) - 1) * var(--note-gutter)) /
+      var(--computed-cols)
+  );
+}
+.notes-grid .gutter-sizer {
+  width: var(--note-gutter);
+}
+
+/* Each note item is the Masonry "columnWidth" reference. Keep width fixed; Masonry computes # of columns */
+.note-item {
+  width: calc(
+    (100% - (var(--computed-cols) - 1) * var(--note-gutter)) /
+      var(--computed-cols)
+  );
+  margin-bottom: var(--note-gutter); /* vertical gap exactly 10px */
+}
+
+/* Ensure the note content fills the item width */
+.note img,
+.note video,
+.note canvas,
+.note iframe {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Remove old react-masonry-css styling (no longer used) */
+.my-masonry-grid,
+.my-masonry-grid_column {
+  all: unset;
+}
+
+.edit_toggled_container::before {
+  content: "";
+  position: fixed;
+  display: block;
+  top: 0px;
+  left: 0px;
+  width: 1000vw;
+  height: calc(1000vh * 2);
+  margin-left: calc(50% - 500vw);
+  margin-right: calc(50% - 50vw);
+  transform: translate(0%, -50%);
+  background-color: rgb(26, 32, 50, 0.6);
+  z-index: -1;
+}
+
+.edit_toggled_container {
+  position: absolute;
+  top: 18rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  /* opacity: 0; */
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  margin: 0 !important;
+}
+
+.editNote {
+  width: 600px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  padding: 0px;
+  padding-bottom: 5px;
+  overflow: hidden !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* background-color: rgb(131, 255, 131); */
+}
+
+/* Add border above footer in EditNote */
+.editNote .form-btn {
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+}
+
+/* Dark theme border for EditNote footer */
+[data-theme="dark"] .editNote .form-btn {
+  border-top-color: rgb(95, 99, 104);
+}
+
+.editNote .editForm input,
+.editNote .editForm textarea {
+  display: block !important;
+  width: 100%;
+  color: var(--text-primary);
+  background-color: transparent;
+  transition: color 0.3s ease;
+}
+
+.editNote .editForm input::-webkit-input-placeholder {
+  color: var(--placeholder-color);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.75rem;
+  padding-bottom: 12px;
+  padding-top: 16px;
+}
+
+.editNote .editForm textarea::-webkit-input-placeholder {
+  color: var(--placeholder-color);
+  letter-spacing: 0.01785714em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.editNote .editForm input {
+  color: var(--text-primary);
+  padding: 16px 15px 12px;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.75rem;
+  transition: color 0.3s ease;
+}
+
+.editNote .editForm textarea {
+  color: var(--text-primary);
+  padding: 4px 16px 12px;
+  letter-spacing: 0.00625em;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  min-height: 50px;
+  max-height: 350px;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.editNote .editForm textarea::-webkit-resizer {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+
+.time-stamp {
+  padding: 5px 10px;
+  text-align: right;
+  color: var(--text-secondary);
+  letter-spacing: 0.025em;
+  /* font-family: Roboto, Arial, sans-serif; */
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1rem;
+  cursor: default;
+  transition: color 0.3s ease;
+
+  visibility: hidden !important;
+}
+
+.time-stamp.visible {
+  visibility: visible !important;
+}
+
+.form-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 5px;
+}
+
+.form-btn button {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0.01785714em;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  height: 36px;
+  padding: 8px 20px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  transition: color 0.3s ease;
+}
+
+.form-btn button:hover {
+  /* background-color: rgba(95, 99, 104, 0.049) !important;  */
+  background-color: rgba(42, 43, 45, 0.084) !important;
+}
+
+/* BgOptions style  */
+.bgOptionsContainer {
+  position: absolute;
+  bottom: -63px;
+  width: 380px;
+  border-radius: 10px;
+  z-index: 9000 !important;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+  border: 1px solid var(--border);
+}
+
+.bgOptionsContainer hr {
+  background-color: rgb(201, 206, 201);
+  width: 100%;
+  height: 0.005rem;
+  margin: 2.5px 0;
+  border: none;
+  outline: none;
+}
+
+.solid_colors.backgrounds > div > div {
+  width: 28px;
+  height: 28px;
+}
+
+.awesome_backgrounds.backgrounds > div > div {
+  width: 30px;
+  height: 30px;
+}
+
+.backgrounds > div > div {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.backgrounds > div > div::before {
+  content: "";
+  display: block;
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  margin-left: 2px;
+  margin-top: -1px;
+  border: none;
+  outline: none;
+}
+
+/* Remove the general hover rule that was causing conflicts */
+
+.backgrounds > div {
+  position: relative;
+}
+
+.solid_colors,
+.awesome_backgrounds {
+  display: flex;
+  justify-content: space-between;
+}
+
+.solid_colors {
+  padding: 8px 9px 3px;
+}
+
+.awesome_backgrounds {
+  padding: 3px 9px 8px;
+}
+
+/* styles for BgOtions div's  */
+
+[class|="bg"] {
+  background-color: #fff !important;
+}
+
+/* style for checked bgOptions  */
+
+[class|="bg"] .checked {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 13px !important;
+  height: 13px !important;
+  font-size: 10px;
+  color: var(--bgActiveBdr);
+  background-color: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+}
+
+/* BgOptions border colors */
+
+.bg-default {
+  border: 1px solid var(--border) !important;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important;
+  color: rgb(55, 56, 58) !important;
+}
+
+.bg-img-default {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important;
+  color: rgb(55, 56, 58) !important;
+}
+
+.bg-default::before,
+.bg-img-default::before {
+  display: none !important;
+}
+
+.solid_colors .bg-default svg {
+  width: 20px;
+  height: 20px;
+}
+
+.awesome_backgrounds .bg-img-default svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Note borders 
+.bg-default,
+.note-bg-default,
+.editNote-bg-default {
+border: 1px solid var(--border) !important;
+} */
+
+.bg-red,
+.note-bg-red,
+.editNote-bg-red {
+  border: 1px solid #faafa8 !important;
+}
+
+.bg-orange,
+.note-bg-orange,
+.editNote-bg-orange {
+  border: 1px solid #f39f76 !important;
+}
+
+.bg-yellow,
+.note-bg-yellow,
+.editNote-bg-yellow {
+  border: 1px solid #fff8b8 !important;
+}
+
+.bg-green,
+.note-bg-green,
+.editNote-bg-green {
+  border: 1px solid #e2f6d3 !important;
+}
+
+.bg-teal,
+.note-bg-teal,
+.editNote-bg-teal {
+  border: 1px solid #b4ddd3 !important;
+}
+
+.bg-blue,
+.note-bg-blue,
+.editNote-bg-blue {
+  border: 1px solid #d4e4ed !important;
+}
+
+.bg-dark-blue,
+.note-bg-dark-blue,
+.editNote-bg-dark-blue {
+  border: 1px solid #aeccdc !important;
+}
+
+.bg-purple,
+.note-bg-purple,
+.editNote-bg-purple {
+  border: 1px solid #d3bfdb !important;
+}
+
+.bg-pink,
+.note-bg-pink,
+.editNote-bg-pink {
+  border: 1px solid #f6e2dd !important;
+}
+
+.bg-brown,
+.note-bg-brown,
+.editNote-bg-brown {
+  border: 1px solid #e9e3d4 !important;
+}
+
+.bg-gray,
+.note-bg-gray,
+.editNote-bg-gray {
+  border: 1px solid #efeff1 !important;
+}
+
+/* Note background colors  */
+.note-bg-default,
+.editNote-bg-default {
+  background-color: #fff !important;
+}
+
+.bg-red::before,
+.note-bg-red,
+.editNote-bg-red {
+  background-color: #faafa8 !important;
+}
+
+.bg-orange::before,
+.note-bg-orange,
+.editNote-bg-orange {
+  background-color: #f39f76 !important;
+}
+
+.bg-yellow::before,
+.note-bg-yellow,
+.editNote-bg-yellow {
+  background-color: #fff8b8 !important;
+}
+
+.bg-green::before,
+.note-bg-green,
+.editNote-bg-green {
+  background-color: #e2f6d3 !important;
+}
+
+.bg-teal::before,
+.note-bg-teal,
+.editNote-bg-teal {
+  background-color: #b4ddd3 !important;
+}
+
+.bg-blue::before,
+.note-bg-blue,
+.editNote-bg-blue {
+  background-color: #d4e4ed !important;
+}
+
+.bg-dark-blue::before,
+.note-bg-dark-blue,
+.editNote-bg-dark-blue {
+  background-color: #aeccdc !important;
+}
+
+.bg-purple::before,
+.note-bg-purple,
+.editNote-bg-purple {
+  background-color: #d3bfdb !important;
+}
+
+.bg-pink::before,
+.note-bg-pink,
+.editNote-bg-pink {
+  background-color: #f6e2dd !important;
+}
+
+.bg-brown::before,
+.note-bg-brown,
+.editNote-bg-brown {
+  background-color: #e9e3d4 !important;
+}
+
+.bg-gray::before,
+.note-bg-gray,
+.editNote-bg-gray {
+  background-color: #efeff1 !important;
+}
+
+/* Active note background */
+.bg-active,
+.solid_colors > div > div.bg-active:hover,
+.bg-img-default.bg-active {
+  border: 2px solid var(--bgActiveBdr) !important;
+}
+
+/* Proper hover behavior for background options */
+/* Default icons (always violet border on hover) */
+.bg-default:hover,
+.bg-img-default:hover {
+  background-color: #07070717 !important;
+  border: 2px solid var(--bgActiveBdr) !important;
+  cursor: pointer;
+}
+
+/* Active/selected items (violet border on hover) */
+.bg-active:hover,
+.bg-img-default.bg-active:hover {
+  background-color: #07070717 !important;
+  border: 2px solid var(--bgActiveBdr) !important;
+  cursor: pointer;
+}
+
+/* All other background options (black border on hover) */
+.backgrounds
+  > div
+  > div:hover:not(.bg-default):not(.bg-img-default):not(.bg-active):not(
+    .bg-img-default.bg-active
+  ) {
+  background-color: #07070717 !important;
+  border: 2px solid rgb(33, 31, 31) !important;
+  cursor: pointer;
+}
+
+/* Background svg options  */
+.note-container,
+.input-container {
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Image bgOptions  */
+.bg-img-img1 {
+  background-image: url("./assets/background/light/thumbnail/grocery_light_thumb_0615.svg");
+}
+
+.bg-img-img2 {
+  background-image: url("./assets/background/light/thumbnail/food_light_thumb_0615.svg");
+}
+
+.bg-img-img3 {
+  background-image: url("./assets/background/light/thumbnail/music_light_thumb_0615.svg");
+}
+
+.bg-img-img4 {
+  background-image: url("./assets/background/light/thumbnail/recipe_light_thumb_0615.svg");
+}
+
+.bg-img-img5 {
+  background-image: url("./assets/background/light/thumbnail/notes_light_thumb_0615.svg");
+}
+
+.bg-img-img6 {
+  background-image: url("./assets/background/light/thumbnail/places_light_thumb_0615.svg");
+}
+
+.bg-img-img7 {
+  background-image: url("./assets/background/light/thumbnail/travel_light_thumb_0615.svg");
+}
+
+.bg-img-img8 {
+  background-image: url("./assets/background/light/thumbnail/video_light_thumb_0615.svg");
+}
+
+.bg-img-img9 {
+  background-image: url("./assets/background/light/thumbnail/celebration_light_thumb_0715.svg");
+}
+
+/* EditNote backgrounds  */
+.editNote-bg-img-default,
+.note-bg-img-default {
+  background-color: transparent;
+}
+
+.editNote-bg-img-img1,
+.note-bg-img-img1 {
+  background-image: url("./assets/background/light/grocery_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img2,
+.note-bg-img-img2 {
+  background-image: url("./assets/background/light/food_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img3,
+.note-bg-img-img3 {
+  background-image: url("./assets/background/light/music_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img4,
+.note-bg-img-img4 {
+  background-image: url("./assets/background/light/recipe_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img5,
+.note-bg-img-img5 {
+  background-image: url("./assets/background/light/notes_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img6,
+.note-bg-img-img6 {
+  background-image: url("./assets/background/light/places_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img7,
+.note-bg-img-img7 {
+  background-image: url("./assets/background/light/travel_light_0614.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img8,
+.note-bg-img-img8 {
+  background-image: url("./assets/background/light/video_light_0609.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.editNote-bg-img-img9,
+.note-bg-img-img9 {
+  background-image: url("./assets/background/light/celebration_light_0714.svg");
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Dark theme image backgrounds */
+[data-theme="dark"] .bg-img-img1 {
+  background-image: url("./assets/background/dark/thumbnail/grocery_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img2 {
+  background-image: url("./assets/background/dark/thumbnail/food_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img3 {
+  background-image: url("./assets/background/dark/thumbnail/music_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img4 {
+  background-image: url("./assets/background/dark/thumbnail/recipe_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img5 {
+  background-image: url("./assets/background/dark/thumbnail/notes_dark_thumb_0715.svg");
+}
+
+[data-theme="dark"] .bg-img-img6 {
+  background-image: url("./assets/background/dark/thumbnail/places_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img7 {
+  background-image: url("./assets/background/dark/thumbnail/travel_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img8 {
+  background-image: url("./assets/background/dark/thumbnail/video_dark_thumb_0615.svg");
+}
+
+[data-theme="dark"] .bg-img-img9 {
+  background-image: url("./assets/background/dark/thumbnail/celebration_dark_thumb_0715.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img1,
+[data-theme="dark"] .note-bg-img-img1 {
+  background-image: url("./assets/background/dark/grocery_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img2,
+[data-theme="dark"] .note-bg-img-img2 {
+  background-image: url("./assets/background/dark/food_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img3,
+[data-theme="dark"] .note-bg-img-img3 {
+  background-image: url("./assets/background/dark/music_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img4,
+[data-theme="dark"] .note-bg-img-img4 {
+  background-image: url("./assets/background/dark/recipe_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img5,
+[data-theme="dark"] .note-bg-img-img5 {
+  background-image: url("./assets/background/dark/notes_dark_0714.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img6,
+[data-theme="dark"] .note-bg-img-img6 {
+  background-image: url("./assets/background/dark/places_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img7,
+[data-theme="dark"] .note-bg-img-img7 {
+  background-image: url("./assets/background/dark/travel_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img8,
+[data-theme="dark"] .note-bg-img-img8 {
+  background-image: url("./assets/background/dark/video_dark_0609.svg");
+}
+
+[data-theme="dark"] .editNote-bg-img-img9,
+[data-theme="dark"] .note-bg-img-img9 {
+  background-image: url("./assets/background/dark/celebration_dark_0714.svg");
+}
+
+/* Dark theme color palette overrides */
+[data-theme="dark"] .bg-red::before,
+[data-theme="dark"] .note-bg-red,
+[data-theme="dark"] .editNote-bg-red {
+  background-color: #77172e !important;
+}
+
+[data-theme="dark"] .bg-orange::before,
+[data-theme="dark"] .note-bg-orange,
+[data-theme="dark"] .editNote-bg-orange {
+  background-color: #692b17 !important;
+}
+
+[data-theme="dark"] .bg-yellow::before,
+[data-theme="dark"] .note-bg-yellow,
+[data-theme="dark"] .editNote-bg-yellow {
+  background-color: #7c4a03 !important;
+}
+
+[data-theme="dark"] .bg-green::before,
+[data-theme="dark"] .note-bg-green,
+[data-theme="dark"] .editNote-bg-green {
+  background-color: #264d3b !important;
+}
+
+[data-theme="dark"] .bg-teal::before,
+[data-theme="dark"] .note-bg-teal,
+[data-theme="dark"] .editNote-bg-teal {
+  background-color: #0c625d !important;
+}
+
+[data-theme="dark"] .bg-blue::before,
+[data-theme="dark"] .note-bg-blue,
+[data-theme="dark"] .editNote-bg-blue {
+  background-color: #256377 !important;
+}
+
+[data-theme="dark"] .bg-dark-blue::before,
+[data-theme="dark"] .note-bg-dark-blue,
+[data-theme="dark"] .editNote-bg-dark-blue {
+  background-color: #284255 !important;
+}
+
+[data-theme="dark"] .bg-purple::before,
+[data-theme="dark"] .note-bg-purple,
+[data-theme="dark"] .editNote-bg-purple {
+  background-color: #472e5b !important;
+}
+
+[data-theme="dark"] .bg-pink::before,
+[data-theme="dark"] .note-bg-pink,
+[data-theme="dark"] .editNote-bg-pink {
+  background-color: #6c394f !important;
+}
+
+[data-theme="dark"] .bg-brown::before,
+[data-theme="dark"] .note-bg-brown,
+[data-theme="dark"] .editNote-bg-brown {
+  background-color: #4b443a !important;
+}
+
+[data-theme="dark"] .bg-gray::before,
+[data-theme="dark"] .note-bg-gray,
+[data-theme="dark"] .editNote-bg-gray {
+  background-color: #232427 !important;
+}
+
+/* Dark theme border color overrides */
+[data-theme="dark"] .bg-red,
+[data-theme="dark"] .note-bg-red,
+[data-theme="dark"] .editNote-bg-red {
+  border: 1px solid #77172e !important;
+}
+
+[data-theme="dark"] .bg-orange,
+[data-theme="dark"] .note-bg-orange,
+[data-theme="dark"] .editNote-bg-orange {
+  border: 1px solid #692b17 !important;
+}
+
+[data-theme="dark"] .bg-yellow,
+[data-theme="dark"] .note-bg-yellow,
+[data-theme="dark"] .editNote-bg-yellow {
+  border: 1px solid #7c4a03 !important;
+}
+
+[data-theme="dark"] .bg-green,
+[data-theme="dark"] .note-bg-green,
+[data-theme="dark"] .editNote-bg-green {
+  border: 1px solid #264d3b !important;
+}
+
+[data-theme="dark"] .bg-teal,
+[data-theme="dark"] .note-bg-teal,
+[data-theme="dark"] .editNote-bg-teal {
+  border: 1px solid #0c625d !important;
+}
+
+[data-theme="dark"] .bg-blue,
+[data-theme="dark"] .note-bg-blue,
+[data-theme="dark"] .editNote-bg-blue {
+  border: 1px solid #256377 !important;
+}
+
+[data-theme="dark"] .bg-dark-blue,
+[data-theme="dark"] .note-bg-dark-blue,
+[data-theme="dark"] .editNote-bg-dark-blue {
+  border: 1px solid #284255 !important;
+}
+
+[data-theme="dark"] .bg-purple,
+[data-theme="dark"] .note-bg-purple,
+[data-theme="dark"] .editNote-bg-purple {
+  border: 1px solid #472e5b !important;
+}
+
+[data-theme="dark"] .bg-pink,
+[data-theme="dark"] .note-bg-pink,
+[data-theme="dark"] .editNote-bg-pink {
+  border: 1px solid #6c394f !important;
+}
+
+[data-theme="dark"] .bg-brown,
+[data-theme="dark"] .note-bg-brown,
+[data-theme="dark"] .editNote-bg-brown {
+  border: 1px solid #4b443a !important;
+}
+
+[data-theme="dark"] .bg-gray,
+[data-theme="dark"] .note-bg-gray,
+[data-theme="dark"] .editNote-bg-gray {
+  border: 1px solid #232427 !important;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Small screens: single column that spans full width minus container padding */
+@media (max-width: 612px) {
+  :root {
+    --note-col-width: 100%;
+  }
+  .container {
+    padding: 0 16px;
+  }
+  /* force a single column on small screens */
+  .notes-grid {
+    --computed-cols: 1 !important;
+  }
+  .note-item {
+    width: 100% !important;
+  }
+}
+
+/* Large/wide screens: slightly larger base column for more Keep-like feel */
+@media (min-width: 1600px) {
+  :root {
+    --note-col-width: 300px;
+  }
+}
+
+/* Media Queries  */
+@media (max-width: 630px) {
+  form.inputForm {
+    margin-bottom: 24px;
+  }
+
+  .editNote {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 428px) {
+  .bgOptionsContainer {
+    width: 250px;
+
+    /*--- 2 row layout  ---*/
+    bottom: -155px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .backgrounds {
+    flex-wrap: wrap;
+  }
+
+  .backgrounds > div > div {
+    margin: 4.3px;
+  }
+
+  .footer p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .edit_toggled_container {
+    top: 9rem;
+  }
+
+  .bgOptionsContainer {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+/* Authentication Components */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+.loading-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.loading-content h3 {
+  color: var(--text-primary);
+  font-weight: 400;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.loading-content p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.login-card {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-header {
+  margin-bottom: 32px;
+}
+
+.login-header h1 {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 400;
+  margin: 16px 0 8px 0;
+  transition: color 0.3s ease;
+}
+
+.login-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.login-actions {
+  margin-bottom: 24px;
+}
+
+.login-footer {
+  margin-top: 24px;
+}
+
+.login-footer p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+/* Responsive adjustments for login */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .login-header h1 {
+    font-size: 20px;
+  }
+}
+
+/* Animation for notes */
+/* Search Bar Styles */
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+/* Mobile Search Icon (hidden by default, shown on mobile) */
+.mobile-search-icon-wrapper {
+  display: none;
+}
+
+.mobile-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-search-icon:hover {
+  background-color: #3c40431a;
+}
+
+/* Desktop Search Icon (shown by default, hidden on mobile when search closed) */
+.desktop-search-icon-wrapper {
+  display: block;
+}
+
+/* Mobile Back Button */
+.mobile-back-button {
+  color: #5f6368 !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin-right: 8px;
+  border-radius: 50% !important;
+  transition: background-color 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.mobile-back-button:hover {
+  background-color: #e8eaed !important;
+  color: #202124 !important;
+}
+
+/* Dark theme mobile back button - make more visible */
+[data-theme="dark"] .mobile-back-button {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+
+[data-theme="dark"] .mobile-back-button:hover {
+  background-color: rgba(232, 234, 237, 0.12) !important;
+  color: #ffffff !important;
+}
+
+/* Dark theme mobile back button when search is focused */
+[data-theme="dark"] .search-container.focused .mobile-back-button {
+  color: #5f6368 !important;
+}
+
+[data-theme="dark"] .search-container.focused .mobile-back-button:hover {
+  background-color: rgba(60, 64, 67, 0.12) !important;
+  color: #202124 !important;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--search-bg);
+  border-radius: 8px;
+  padding: 3px 12px;
+  transition: all 0.3s ease;
+}
+
+/* .search-input-wrapper:hover {
+background-color: #e8eaed;
+} */
+
+.search-container.focused .search-input-wrapper {
+  background-color: #fff;
+  box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3),
+    0 1px 3px 1px rgba(65, 69, 73, 0.15);
+  -webkit-box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3),
+    0 1px 3px 1px rgba(65, 69, 73, 0.15);
+}
+
+/* Dark theme focused search bar */
+[data-theme="dark"] .search-container.focused .search-input-wrapper {
+  background-color: #fff;
+  box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3),
+    0 1px 3px 1px rgba(65, 69, 73, 0.15);
+}
+
+/* Dark theme focused search input text */
+[data-theme="dark"] .search-container.focused .search-input {
+  color: #202124;
+}
+
+/* Dark theme focused search input placeholder */
+[data-theme="dark"] .search-container.focused .search-input::placeholder {
+  color: #5f6368;
+}
+
+/* Dark theme focused search icon */
+[data-theme="dark"] .search-container.focused .search-icon {
+  color: #5f6368;
+}
+
+/* Dark theme focused clear button (X icon) */
+[data-theme="dark"] .search-container.focused .clear-button {
+  color: #5f6368 !important;
+}
+
+/* Dark theme focused state hover - both icons same hover */
+[data-theme="dark"] .search-container.focused .search-icon-wrapper:hover {
+  background-color: rgba(60, 64, 67, 0.12);
+}
+
+[data-theme="dark"] .search-container.focused .clear-button:hover {
+  background-color: rgba(60, 64, 67, 0.12) !important;
+  color: #202124 !important;
+}
+
+.search-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 5px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+/* Light theme hover effects */
+.search-icon-wrapper:hover {
+  background-color: #3c40431a;
+}
+
+.clear-button:hover {
+  background-color: #3c40431a !important;
+  color: #202124 !important;
+}
+
+/* Dark theme hover effects - unfocused state */
+[data-theme="dark"] .search-icon-wrapper:hover {
+  background-color: rgba(232, 234, 237, 0.12);
+}
+
+[data-theme="dark"] .clear-button:hover {
+  background-color: rgba(232, 234, 237, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.search-icon {
+  color: var(--text-secondary);
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--text-primary);
+  outline: none;
+  padding: 0 8px; /* Add horizontal padding to prevent text from touching icons */
+  transition: color 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: var(--text-primary);
+}
+
+.clear-button {
+  color: var(--text-secondary) !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin-left: 8px;
+  border-radius: 50% !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Remove conflicting clear button hover - handled by theme-specific styles above */
+
+/* Bottom Icons Layout */
+.bottom-icons-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  margin-left: 0;
+  margin-right: auto;
+  width: fit-content;
+}
+
+.formatting-icon,
+.palette-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.formatting-icon:hover,
+.palette-icon:hover {
+  background-color: #07070717;
+}
+
+/* Dark theme icon hover consistency */
+[data-theme="dark"] .formatting-icon:hover,
+[data-theme="dark"] .palette-icon:hover {
+  background-color: rgba(232, 234, 237, 0.12);
+}
+
+.formatting-icon svg,
+.palette-icon svg {
+  color: var(--text-secondary);
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+/* CreateArea Background Options Popup */
+.create-area-bg-options {
+  position: absolute;
+  top: calc(100% - 20px);
+  left: 20px;
+  z-index: 1000;
+  background: transparent;
+  border-radius: 8px;
+  margin-top: 8px;
+  padding: 16px;
+  min-width: 300px;
+}
+
+/* CreateArea Formatting Toolbar */
+.formatting-toolbar {
+  position: relative;
+  background: white;
+  border-radius: 3px;
+  padding: 4px 8px;
+  margin: 8px 0 0 0; /* Add margin to separate from content above */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: fit-content;
+  min-width: 180px;
+  max-width: calc(100% - 16px);
+  /* Position it within the note area, above the bottom icons */
+  display: none; /* Hidden by default */
+}
+
+/* Show when formatting options are toggled */
+.formatting-toolbar.show {
+  display: block;
+}
+
+.format-toolbar-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Desktop/Tablet Layout - Single Row */
+.format-toolbar-row-desktop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Mobile Layout - Two Rows */
+.format-toolbar-row-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.format-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 4px;
+}
+
+.format-toolbar-btn {
+  padding: 4px 6px;
+  border: none;
+  background: transparent !important;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: bolder;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: static !important;
+  float: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  flex: 0 0 auto;
+}
+
+.format-toolbar-btn svg {
+  color: #5f6368 !important;
+  font-size: 16px;
+}
+
+/* Ensure text buttons (H1, H2, Aa) have proper color */
+.format-toolbar-btn:not(:has(svg)) {
+  color: #5f6368 !important;
+}
+
+.format-toolbar-btn:hover {
+  background-color: #07070717 !important;
+  color: #202124;
+}
+
+.format-toolbar-btn:hover svg {
+  color: #202124 !important;
+}
+
+.format-toolbar-btn:hover:not(:has(svg)) {
+  color: #202124 !important;
+}
+
+.format-toolbar-btn.active {
+  background-color: #e8eaed !important;
+  color: #202124;
+}
+
+.format-toolbar-btn.active svg {
+  color: #202124 !important;
+}
+
+.format-toolbar-btn.active:not(:has(svg)) {
+  color: #202124 !important;
+}
+
+.format-separator {
+  width: 1px;
+  height: 16px;
+  background-color: #dadce0;
+  margin: 0 2px;
+  flex: 0 0 auto;
+}
+
+.format-toolbar-btn.clear-format {
+  color: #d93025;
+}
+
+.format-toolbar-btn.clear-format svg {
+  color: #d93025 !important;
+}
+
+.format-toolbar-btn.clear-format:hover {
+  background-color: #07070717 !important;
+}
+
+.format-toolbar-btn.clear-format:hover svg {
+  color: #d93025 !important;
+}
+
+/* Mobile responsiveness - Switch to two-row layout on small screens */
+@media (max-width: 375px) {
+  .formatting-toolbar {
+    min-width: 140px;
+    padding: 2px 4px;
+  }
+
+  /* Hide desktop layout */
+  .format-toolbar-row-desktop {
+    display: none;
+  }
+
+  /* Show mobile layout */
+  .format-toolbar-row-mobile {
+    display: flex;
+  }
+
+  .format-toolbar-row {
+    gap: 2px;
+  }
+
+  .format-toolbar-btn {
+    padding: 2px 4px;
+    min-width: 16px;
+    height: 16px;
+    /* Keep normal font sizes */
+    font-size: 12px;
+  }
+
+  .format-toolbar-btn svg {
+    /* Keep normal icon sizes */
+    font-size: 16px;
+  }
+}
+
+/* Mobile Search Bar Responsive Behavior */
+@media (max-width: 768px) {
+  /* Hide desktop search icon and show mobile search icon */
+  .desktop-search-icon-wrapper {
+    display: none;
+  }
+
+  .mobile-search-icon-wrapper {
+    display: block;
+  }
+
+  /* Hide search input wrapper by default on mobile */
+  .search-input-wrapper {
+    display: none;
+  }
+
+  /* Show search input wrapper when mobile search is open */
+  .search-container.mobile-search-open .search-input-wrapper {
+    display: flex;
+  }
+
+  /* Hide mobile search icon when search is open */
+  .search-container.mobile-search-open .mobile-search-icon-wrapper {
+    display: none;
+  }
+
+  /* Adjust header layout for mobile search */
+  .header-center {
+    justify-content: flex-end;
+    margin: 0;
+  }
+
+  /* Mobile header right side - evenly spaced icons */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Even spacing between search, gear, and avatar */
+    margin-left: auto;
+  }
+
+  /* Reduce header gap on mobile for better icon spacing */
+  .header {
+    gap: 12px;
+  }
+
+  .search-container {
+    max-width: none;
+    width: auto;
+  }
+
+  /* When mobile search is open, make it full width */
+  .search-container.mobile-search-open {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Dark theme mobile search container - retain body color */
+  [data-theme="dark"] .search-container.mobile-search-open {
+    background: var(--bg-primary);
+  }
+
+  .search-container.mobile-search-open .search-input-wrapper {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Hide header logo when mobile search is open */
+  .header.mobile-search-open .header-left {
+    display: none;
+  }
+
+  /* Adjust header layout when mobile search is open */
+  .header.mobile-search-open .header-center {
+    justify-content: flex-start;
+    margin: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Text Formatting Classes */
+.text-format-h1 {
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25rem !important;
+  min-height: inherit !important;
+  height: inherit !important;
+  color: var(--text-primary) !important;
+}
+
+.text-format-h2 {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25rem !important;
+  min-height: inherit !important;
+  height: inherit !important;
+  color: var(--text-primary) !important;
+}
+
+.text-format-normal {
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.25rem !important;
+  min-height: inherit !important;
+  height: inherit !important;
+  color: var(--text-primary) !important;
+}
+
+/* Inline Formatting Classes */
+.text-bold {
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.text-italic {
+  font-style: italic !important;
+  color: var(--text-primary) !important;
+}
+
+.text-underline {
+  text-decoration: underline !important;
+  color: var(--text-primary) !important;
+}
+
+/* Combined formatting classes */
+.text-bold.text-italic {
+  font-weight: 600 !important;
+  font-style: italic !important;
+  color: var(--text-primary) !important;
+}
+
+.text-bold.text-underline {
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  color: var(--text-primary) !important;
+}
+
+.text-italic.text-underline {
+  font-style: italic !important;
+  text-decoration: underline !important;
+  color: var(--text-primary) !important;
+}
+
+.text-bold.text-italic.text-underline {
+  font-weight: 600 !important;
+  font-style: italic !important;
+  text-decoration: underline !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure textarea height remains constant regardless of text format */
+form.inputForm textarea,
+form.inputForm textarea.text-format-h1,
+form.inputForm textarea.text-format-h2,
+form.inputForm textarea.text-format-normal {
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 1.25rem !important;
+  overflow-y: auto;
+}
+
+/* EditNote Formatting Toolbar - Positioned absolutely like background options */
+.editNote .formatting-toolbar {
+  position: absolute;
+  bottom: -21.5px;
+  right: 85px;
+  background: white;
+  border-radius: 3px;
+  padding: 4x 8px;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: fit-content;
+  min-width: 320px;
+  max-width: calc(100% - 16px);
+  z-index: 1000;
+  display: none;
+}
+
+.editNote .formatting-toolbar.show {
+  display: block;
+}
+
+.editNote .format-toolbar-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.editNote .format-toolbar-row-desktop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.editNote .format-toolbar-row-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.editNote .format-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 8px;
+}
+
+.editNote .format-toolbar-btn {
+  padding: 4px 6px;
+  border: none;
+  background: transparent !important;
+  color: #5f6368;
+  font-size: 14px;
+  font-weight: bolder;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: static !important;
+  float: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  flex: 0 0 auto;
+}
+
+.editNote .format-toolbar-btn svg {
+  color: #5f6368 !important;
+  font-size: 20px;
+}
+
+.editNote .format-toolbar-btn:not(:has(svg)) {
+  color: #5f6368 !important;
+}
+
+.editNote .format-toolbar-btn:hover {
+  background-color: #07070717 !important;
+  color: #202124;
+}
+
+.editNote .format-toolbar-btn:hover svg {
+  color: #202124 !important;
+}
+
+.editNote .format-toolbar-btn:hover:not(:has(svg)) {
+  color: #202124 !important;
+}
+
+.editNote .format-toolbar-btn.active {
+  background-color: #e8eaed !important;
+  color: #202124;
+  border-radius: 50%;
+}
+
+.editNote .format-toolbar-btn.active svg {
+  color: #202124 !important;
+}
+
+.editNote .format-toolbar-btn.active:not(:has(svg)) {
+  color: #202124 !important;
+}
+
+.editNote .format-separator {
+  width: 1px;
+  height: 24px;
+  background-color: #dadce0;
+  margin: 0 6px;
+  flex: 0 0 auto;
+}
+
+.editNote .format-toolbar-btn.clear-format {
+  color: #d93025;
+}
+
+.editNote .format-toolbar-btn.clear-format svg {
+  color: #d93025 !important;
+}
+
+.editNote .format-toolbar-btn.clear-format:hover {
+  background-color: #07070717 !important;
+}
+
+.editNote .format-toolbar-btn.clear-format:hover svg {
+  color: #d93025 !important;
+}
+
+/* Mobile responsiveness for EditNote formatting toolbar */
+@media (max-width: 556px) {
+  .editNote .formatting-toolbar {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 375px) {
+  .editNote .formatting-toolbar {
+    min-width: 240px;
+    padding: 8px 12px;
+    bottom: -64.5px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .editNote .format-toolbar-row-desktop {
+    display: none;
+  }
+
+  .editNote .format-toolbar-row-mobile {
+    display: flex;
+  }
+
+  .editNote .format-toolbar-row {
+    gap: 6px;
+  }
+
+  .editNote .format-toolbar-btn {
+    padding: 6px 8px;
+    min-width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .editNote .format-toolbar-btn svg {
+    font-size: 18px;
+  }
+}
