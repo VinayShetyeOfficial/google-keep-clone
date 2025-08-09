@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
 import Note from "./components/Note";
 import LoadingSpinner from "./components/LoadingSpinner";
 import LoginPrompt from "./components/LoginPrompt";
 import Footer from "./components/Footer";
-// Removed react-masonry-css
 import "./style.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import {
@@ -20,22 +21,8 @@ import {
   updateNote,
   deleteNote as deleteNoteFromDB,
 } from "./services/noteService";
-
-// Masonry packages (same as CodePen approach by Dave DeSandro)
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
-
-/**
- * Main App component managing authentication and notes state
- *
- * Features:
- * - Firebase authentication
- * - User-specific notes management
- * - Real-time database operations
- * - Robust Masonry layout using masonry-layout (columnWidth pattern)
- * - Loading states and error handling
- * - Dark theme support
- */
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,12 +30,15 @@ function App() {
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Masonry refs
   const gridRef = useRef(null);
   const msnryRef = useRef(null);
+  const lastWidthRef = useRef(0);
+  const lastColsRef = useRef(0);
+  const layoutRafRef = useRef(0);
+  let resizeRaf = null;
 
-  // Listen to authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChange(async (user) => {
       if (user) {
@@ -69,11 +59,9 @@ function App() {
       }
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
-  // Handle Google sign-in
   const handleSignIn = async () => {
     try {
       setAuthError(null);
@@ -83,7 +71,6 @@ function App() {
     }
   };
 
-  // Handle sign-out
   const handleSignOut = async () => {
     try {
       await signOutUser();
@@ -92,10 +79,8 @@ function App() {
     }
   };
 
-  // Add new note
   const addNote = async (newNote) => {
     if (!user) return;
-
     try {
       const noteId = await saveNote(newNote, user.uid);
       const noteWithId = { ...newNote, id: noteId };
@@ -111,27 +96,14 @@ function App() {
     }
   };
 
-  // Edit note
   const editNote = async (updatedNote) => {
     if (!user) return;
-
     try {
       await updateNote(updatedNote.id, updatedNote);
       const updateArr = (arr) =>
         arr.map((note) =>
-          note.id === updatedNote.id
-            ? {
-                ...note,
-                title: updatedNote.title,
-                content: updatedNote.content,
-                bgColor: updatedNote.bgColor,
-                bgImage: updatedNote.bgImage,
-                textFormat: updatedNote.textFormat,
-                timeStamp: updatedNote.timeStamp,
-              }
-            : note
+          note.id === updatedNote.id ? { ...note, ...updatedNote } : note
         );
-
       setNotes(updateArr);
       setFilteredNotes(updateArr);
     } catch (error) {
@@ -139,7 +111,6 @@ function App() {
     }
   };
 
-  // Helper to strip markdown-like markers for search
   const stripMarkdownSyntax = (text) => {
     if (!text) return "";
     return text
@@ -148,8 +119,8 @@ function App() {
       .replace(/__(.*?)__/g, "$1");
   };
 
-  // Search notes
   const handleSearch = (searchQuery) => {
+    setSearchQuery(searchQuery);
     if (!searchQuery.trim()) {
       setFilteredNotes(notes);
       return;
@@ -165,10 +136,8 @@ function App() {
     setFilteredNotes(filtered);
   };
 
-  // Delete note
   const deleteNote = async (id) => {
     if (!user) return;
-
     try {
       await deleteNoteFromDB(id);
       setNotes((prev) => prev.filter((n) => n.id !== id));
@@ -178,55 +147,57 @@ function App() {
     }
   };
 
-  // Initialize / update Masonry just like the CodePen pattern
+  const scheduleLayout = () => {
+    if (!msnryRef.current) return;
+    if (layoutRafRef.current) return;
+    layoutRafRef.current = requestAnimationFrame(() => {
+      layoutRafRef.current = 0;
+      try {
+        msnryRef.current.layout();
+      } catch {}
+    });
+  };
+
+  const computeAndSetCols = () => {
+    const gridEl = gridRef.current;
+    if (!gridEl) return lastColsRef.current || 1;
+
+    if (window.innerWidth <= 612) {
+      if (lastColsRef.current !== 1) {
+        gridEl.style.setProperty("--computed-cols", "1");
+        lastColsRef.current = 1;
+      }
+      return 1;
+    }
+
+    const styles = getComputedStyle(document.documentElement);
+    const baseColWidthPx = Number.parseFloat(
+      (styles.getPropertyValue("--note-col-width") || "260px")
+        .replace("px", "")
+        .trim()
+    );
+    const gutterPx = Number.parseFloat(
+      (styles.getPropertyValue("--note-gutter") || "10px")
+        .replace("px", "")
+        .trim()
+    );
+
+    const gridWidth = gridEl.clientWidth;
+    const cols = Math.max(
+      1,
+      Math.floor((gridWidth + gutterPx) / (baseColWidthPx + gutterPx))
+    );
+    if (cols !== lastColsRef.current) {
+      gridEl.style.setProperty("--computed-cols", String(cols));
+      lastColsRef.current = cols;
+    }
+    return cols;
+  };
+
   useEffect(() => {
     const gridEl = gridRef.current;
-    if (!gridEl) return;
+    if (!gridEl || !filteredNotes.length) return;
 
-    // helper: read base column width (px) and compute how many columns fit
-    const computeAndSetCols = () => {
-      // Force single column on small screens (≤612px)
-      if (window.innerWidth <= 612) {
-        gridEl.style.setProperty("--computed-cols", "1");
-        return 1;
-      }
-
-      const styles = getComputedStyle(document.documentElement);
-      // Base desired column width in px (from --note-col-width), default 260
-      const baseColWidthPx = parseFloat(
-        styles.getPropertyValue("--note-col-width").replace("px", "").trim() ||
-          "260"
-      );
-      const gutterPx = parseFloat(
-        styles.getPropertyValue("--note-gutter").replace("px", "").trim() ||
-          "10"
-      );
-
-      const gridWidth = gridEl.clientWidth; // available width
-      // number of columns that can fit at the base width, minimum 1
-      const cols = Math.max(
-        1,
-        Math.floor((gridWidth + gutterPx) / (baseColWidthPx + gutterPx))
-      );
-
-      gridEl.style.setProperty("--computed-cols", String(cols));
-      return cols;
-    };
-
-    let raf = 0;
-
-    const onResize = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        computeAndSetCols();
-        if (msnryRef.current) {
-          msnryRef.current.reloadItems();
-          msnryRef.current.layout();
-        }
-      });
-    };
-
-    // Destroy any previous Masonry instance
     if (msnryRef.current) {
       try {
         msnryRef.current.destroy();
@@ -234,12 +205,8 @@ function App() {
       msnryRef.current = null;
     }
 
-    if (!filteredNotes || filteredNotes.length === 0) return;
-
-    // Set cols before initializing Masonry
     computeAndSetCols();
 
-    // Initialize Masonry using grid/gutter sizers and percent positioning
     msnryRef.current = new Masonry(gridEl, {
       itemSelector: ".note-item",
       columnWidth: ".grid-sizer",
@@ -248,48 +215,64 @@ function App() {
       fitWidth: false,
       horizontalOrder: false,
       originTop: true,
-      transitionDuration: "0.2s",
+      transitionDuration: "0s", // prevent bounce
     });
 
     msnryRef.current.reloadItems();
     msnryRef.current.layout();
 
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        if (msnryRef.current) {
-          msnryRef.current.reloadItems();
-          msnryRef.current.layout();
-        }
-      });
+      document.fonts.ready.then(() => scheduleLayout());
     }
 
-    // Relayout after images/media load
     const imgLoad = imagesLoaded(gridEl);
-    imgLoad.on("progress", () => {
-      if (msnryRef.current) msnryRef.current.layout();
-    });
-    imgLoad.on("done", () => {
-      if (msnryRef.current) msnryRef.current.layout();
-    });
+    imgLoad.on("progress", scheduleLayout);
+    imgLoad.on("done", scheduleLayout);
 
-    // Update columns and relayout on resize/zoom
-
-    window.addEventListener("resize", onResize);
-
-    // Also observe the grid container size directly (more reliable across zoom and layout shifts)
     let ro;
     if ("ResizeObserver" in window) {
-      ro = new ResizeObserver(() => {
-        computeAndSetCols();
-        if (msnryRef.current) msnryRef.current.layout();
+      ro = new ResizeObserver((entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        const width = Math.floor(
+          entry.contentRect?.width || gridEl.clientWidth || 0
+        );
+        if (Math.abs(width - lastWidthRef.current) < 1) return;
+        lastWidthRef.current = width;
+
+        const prevCols = lastColsRef.current;
+        const newCols = computeAndSetCols();
+        if (msnryRef.current && newCols !== prevCols) {
+          try {
+            msnryRef.current.reloadItems();
+          } catch {}
+        }
+        scheduleLayout();
       });
       ro.observe(gridEl);
     }
 
+    const onResize = () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        const prevCols = lastColsRef.current;
+        const newCols = computeAndSetCols();
+        if (msnryRef.current && newCols !== prevCols) {
+          try {
+            msnryRef.current.reloadItems();
+          } catch {}
+        }
+        scheduleLayout();
+      });
+    };
+
+    window.addEventListener("resize", onResize);
+
     return () => {
       window.removeEventListener("resize", onResize);
       if (ro) ro.disconnect();
-      if (raf) cancelAnimationFrame(raf);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      if (layoutRafRef.current) cancelAnimationFrame(layoutRafRef.current);
       if (msnryRef.current) {
         try {
           msnryRef.current.destroy();
@@ -299,17 +282,18 @@ function App() {
     };
   }, [filteredNotes]);
 
-  // Show loading spinner while checking authentication
+  useEffect(() => {
+    scheduleLayout();
+  }, [searchQuery]);
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // Show login prompt if user is not authenticated
   if (!user) {
     return <LoginPrompt onSignIn={handleSignIn} error={authError} />;
   }
 
-  // Show main app if user is authenticated
   return (
     <ThemeProvider>
       <div className="App">
@@ -318,7 +302,6 @@ function App() {
         <CreateArea onAdd={addNote} />
 
         <div className="container">
-          {/* Masonry Grid (CodePen-style) */}
           <div className="notes-grid" ref={gridRef}>
             <div className="grid-sizer" aria-hidden="true" />
             <div className="gutter-sizer" aria-hidden="true" />
@@ -335,6 +318,7 @@ function App() {
                   onDelete={deleteNote}
                   onEdit={editNote}
                   index={index}
+                  searchQuery={searchQuery}
                 />
               </div>
             ))}
