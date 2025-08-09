@@ -15,6 +15,10 @@ import {
   updateInlineFormatButtons,
   applyInlineFormatting,
 } from "../utils/textFormatting";
+import {
+  highlightHTMLString,
+  highlightPlainTextToHTML,
+} from "../utils/searchHighlight";
 
 /**
  * Note component for displaying and editing individual notes
@@ -41,6 +45,7 @@ function Note({
   onEdit,
   onDelete,
   index,
+  searchQuery,
 }) {
   const [updateNote, setUpdateNote] = useState({});
   const [isEditToggled, setIsEditToggled] = useState(false);
@@ -288,10 +293,19 @@ function Note({
         className={`note note-bg-${bgColor} note-bg-img-${bgImage} note-container`}
       >
         {/* Original note always stays visible */}
-        <h1>{title}</h1>
+        <h1
+          dangerouslySetInnerHTML={{
+            __html: highlightPlainTextToHTML(title || "", searchQuery || ""),
+          }}
+        />
         <p
           className={`text-format-${textFormat || "normal"}`}
-          dangerouslySetInnerHTML={{ __html: renderFormattedContent(content) }}
+          dangerouslySetInnerHTML={{
+            __html: highlightHTMLString(
+              renderFormattedContent(content || ""),
+              searchQuery || ""
+            ),
+          }}
         />
         <Tooltip title="Delete">
           <Button className="btn btn-delete" onClick={() => onDelete(id)}>
