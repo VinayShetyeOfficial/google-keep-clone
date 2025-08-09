@@ -2288,6 +2288,17 @@ form.inputForm textarea.text-format-normal {
   color: #d93025 !important;
 }
 
+/* Search highlight (works in light and dark) */
+.search-highlight {
+  background-color: rgb(253, 214, 99);
+  color: inherit; /* preserve existing text color */
+  padding: 0 1px;
+  border-radius: 2px;
+  line-height: inherit;
+  /* subtle outline to ensure visibility on image/background notes */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+}
+
 /* Mobile responsiveness for EditNote formatting toolbar */
 @media (max-width: 556px) {
   .editNote .formatting-toolbar {
