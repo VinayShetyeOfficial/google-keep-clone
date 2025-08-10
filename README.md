@@ -6,7 +6,7 @@
 
 Built with React.js and Firebase • Exploring clean architecture and smooth UX
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Available-brightgreen?style=for-the-badge)](https://google-keep-clone-live.netlify.com)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Available-brightgreen?style=for-the-badge)](https://google-keep-clone-live.netlify.app)
 [![Legacy Version](https://img.shields.io/badge/📱_Legacy-Demo-blue?style=for-the-badge)](https://google-keep-clone-legacy-version.netlify.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE.bib)
 [![GitHub Stars](https://img.shields.io/github/stars/VinayShetyeOfficial/Google-Keep-Clone?style=for-the-badge&logo=github)](https://github.com/VinayShetyeOfficial/Google-Keep-Clone/stargazers)
@@ -130,7 +130,7 @@ _Clean masonry layout with notes, rich formatting, and background options_
 
 ### 🎯 **Planned Features**
 
-</div>
+
 
 | 🚀 **Feature**        | 📊 **Priority** | 🎯 **Status**         | 📝 **Description**          |
 | :-------------------- | :-------------- | :-------------------- | :-------------------------- |
@@ -141,6 +141,8 @@ _Clean masonry layout with notes, rich formatting, and background options_
 | ⏰ **Reminders**      | 🟢 **Low**      | 📋 **Planned**        | Time-based notifications    |
 | 👥 **Collaboration**  | 🟢 **Low**      | 🤔 **Considering**    | Share & edit with others    |
 | 📤 **Export Options** | 🟢 **Low**      | 🤔 **Considering**    | PDF, JSON export formats    |
+
+</div>
 
 ---
 
@@ -214,7 +216,7 @@ npm start
 | Guide                                                      | Description                  |
 | ---------------------------------------------------------- | ---------------------------- |
 | 🔥 [Firebase Setup](./new-version/FIREBASE_SETUP.md)                     | Complete configuration guide |
-| 🌐 [Live Demo](https://google-keep-clone-live.netlify.app/) | See it in action             |
+| 🌐 [Live Demo](https://google-keep-clone-live.netlify.app) | See it in action             |
 
 </td>
 </tr>
