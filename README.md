@@ -26,7 +26,7 @@ Built with React.js and Firebase • Exploring clean architecture and smooth UX
 
 This project is a close recreation of Google Keep's interface and main features. You can create, edit, delete, and organize notes easily, with plenty of customization options. It comes with Google sign-in via Firebase and real-time sync so that your notes are updated instantly across devices.
 
-> 💡 **Why this project?** > <br/> I wanted to learn and practice clean code architecture, make a design that works well on any device, and create a smooth, easy-to-use experience — all while keeping the look and feel similar to the original Google Keep.
+> 💡 **Why this project?**  <br/> ➡️ I wanted to learn and practice clean code architecture, make a design that works well on any device, and create a smooth, easy-to-use experience — all while keeping the look and feel similar to the original Google Keep App.
 
 ## 📸 Demo Screenshots
 
